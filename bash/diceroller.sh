@@ -13,7 +13,7 @@ $(( RANDOM % 6 + 1)) rolled
 "
 #######################################
 
-echo "6-sided dice rolling 4 times for each letters of DYNA"
+echo "6-sided dice rolling 4 times for each letters of TOJO"
 echo "
 $(( RANDOM % 6 + 1))-T
 $(( RANDOM % 6 + 1))-O
