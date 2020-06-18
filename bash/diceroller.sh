@@ -11,7 +11,7 @@ echo "
 Rolling...
 $(( RANDOM % 6 + 1)) rolled
 "
-#######################################
+######################################
 
 echo "6-sided dice rolling 4 times for each letters of TOJO"
 echo "
