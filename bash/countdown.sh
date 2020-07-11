@@ -70,7 +70,7 @@ echo $((sleepCount * 100 / $numberOfSleeps))
 done
 }
 
-#### Main Program
+##### Main Program
 
 # Process command line parameters
 while [ $# -gt 0 ]; do
