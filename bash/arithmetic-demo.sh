@@ -8,14 +8,7 @@
 #    the product of the 3 numbers with a label
 
 # Asking the user for three numbers
-echo "Enter first number"
-read a
-
-echo "Enter second number"
-read b
-
-echo "Enter third number"
-read c
+read -p "enter the 3 numbers" a b c
 ##########################
 
 # Perform arithmetic calculations
