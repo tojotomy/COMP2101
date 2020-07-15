@@ -75,6 +75,7 @@ fi
 #                   Main                      #
 ###############################################
 message="Welcome to planet $hostname, $title $USER!
+cowsay message
 It is $day at $date."
 
 cowsay $message

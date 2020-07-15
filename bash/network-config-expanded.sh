@@ -24,7 +24,7 @@
 #####
 # Once per host report
 #####
-# we use the hostname command to get our system name
+# Use the hostname command to get our system name
 my_hostname=$(hostname)
 
 # the default route can be found in the route table normally
@@ -32,7 +32,7 @@ my_hostname=$(hostname)
 default_router_address=$(ip r s default| cut -d ' ' -f 3)
 default_router_name=$(getent hosts $default_router_address|awk '{print $2}')
 
-# finding external information relies on curl being installed and relies on live internet connection
+# find external information relies on curl being installed and relies on live internet connection
 external_address=$(curl -s icanhazip.com)
 external_name=$(getent hosts $external_address | awk '{print $2}')
 
@@ -61,27 +61,38 @@ EOF
 # Per-interface report
 #####
 # define the interface being summarized
-interface="eno1"
 
-# Find an address and hostname for the interface being summarized
-# we are assuming there is only one IPV4 address assigned to this interface
+#Task 1
+interfaces_list=$(ifconfig | grep -w -o '^[^ ][^ ]*:' | tr -d :)
+
+for interface in $interfaces_list; do
+# Find an address and hostname for the interface
+# Assuming there is only one IPV4 address assigned to this interface
+if [ $interface == "lo" ]
+    then
+      continue
+    fi
 ipv4_address=$(ip a s $interface|awk -F '[/ ]+' '/inet /{print $3}')
 ipv4_hostname=$(getent hosts $ipv4_address | awk '{print $2}')
 
 # Identify the network number for this interface and its name if it has one
-network_address=$(ip route list dev $interface scope link|cut -d ' ' -f 1)
+network_address=$(ip route list dev $interface scope link|cut -d ' ' -f 1 | grep -v '^169.')
 network_number=$(cut -d / -f 1 <<<"$network_address")
 network_name=$(getent networks $network_number|awk '{print $1}')
 
 cat <<EOF
 Interface $interface:
-===============
+=================================
 Address         : $ipv4_address
+==================================
 Name            : $ipv4_hostname
+==================================
 Network Address : $network_address
+===================================
 Network Name    : $network_name
-
+====================================
 EOF
+done
 #####
 # End of per-interface report
 #####
